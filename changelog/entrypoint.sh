@@ -3,13 +3,17 @@ set -e
 
 readonly base="$1"
 readonly revision="$2"
-readonly include_path_params="$3"
-readonly exclude_elements="$4"
+readonly format="$3"
+readonly include_path_params="$4"
+readonly exclude_elements="$5"
 
 echo "running oasdiff changelog base: $base, revision: $revision, include_path_params: $include_path_params, exclude_elements: $exclude_elements"
 
 # Build flags to pass in command
 flags=""
+if [ "$format" != "" ]; then
+    flags="${flags} --format ${format}"
+fi
 if [ "$include_path_params" = "true" ]; then
     flags="${flags} --include-path-params"
 fi
@@ -52,4 +56,3 @@ fi
 echo "$delimiter" >>$GITHUB_OUTPUT
 
 # *** github action step output ***
-
